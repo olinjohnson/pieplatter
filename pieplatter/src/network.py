@@ -19,11 +19,15 @@ class Network:
         return np.mean(prop_loss), cache
 
     def train(self, training_data, training_labels, num_epochs, learning_rate):
-        # TODO: verify that network last layer is an instance of OutputLayer
-
-        output_layer = self.model[-1]
-
-        for i in range(len(self.model) - 1, 0, -1):
-            curr_layer = self.model[i - 1]
-
-
+        for x in range(0, num_epochs):
+            cost, cache = self.forward_prop(training_data, training_labels)
+            chain = self.loss.backward(cache[-1][-1], training_labels)
+            for i in range(len(self.model) - 1, 0, -1):
+                curr_layer = self.model[i]
+                chain, weight_up, bias_up = curr_layer.backward(chain, cache[i - 1][-1], cache[i][-1])
+                curr_layer.weights -= (weight_up * learning_rate)
+                curr_layer.biases -= (bias_up * learning_rate)
+            curr_layer = self.model[0]
+            chain, weight_up, bias_up = curr_layer.backward(chain, training_data, cache[0][-1])
+            curr_layer.weights -= (weight_up * learning_rate)
+            curr_layer.biases -= (bias_up * learning_rate)

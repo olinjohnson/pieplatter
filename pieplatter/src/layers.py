@@ -23,6 +23,22 @@ class Layer:
         a = self.activate(z)
         return a, [z, a]
 
+    def backward(self, chain: np.ndarray, prev_act: np.ndarray, act: np.ndarray) -> List[np.ndarray]:
+        """
+        :param chain: a product of all the partial derivates up to this point
+        :param prev_act: the cached outputs of the previous layer
+        :param act: the cached outputs of the current layer
+        :return: [np.ndarray, np.ndarray, np.ndarray]
+        returns a list containing the derivative of z,
+        a list of updated weights, and a list of updated biases.
+        """
+        a = self.activation.backward(act) * chain
+        weight_update = np.dot(a.T, prev_act) / len(a)
+        cont_chain = np.dot(a, self.weights)
+        return [cont_chain, weight_update, np.mean(a, axis=0)]
+
+
+
 
 # class OutputLayer(Layer):
 #     def __init__(self, num_inputs: int, num_outputs: int, activation: Type[Activation], loss: Type[Loss]):

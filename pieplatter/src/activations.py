@@ -51,7 +51,7 @@ class ActivationSigmoid(Activation):
 
     @staticmethod
     def forward(inputs):
-        return 1 / (1 + np.exp(inputs))
+        return 1 / (np.exp(-inputs) + 1)
 
     @staticmethod
     def backward(inputs):
