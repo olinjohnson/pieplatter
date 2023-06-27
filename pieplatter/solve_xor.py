@@ -19,6 +19,12 @@ class Layer:
         return np.maximum(inputs, 0.01 * inputs)
 
     @staticmethod
+    def activation_elu(inputs):
+        return np.maximum(inputs, np.exp(inputs) - 1)
+
+    #TODO: implement PReLUs
+
+    @staticmethod
     def activation_softmax(inputs):
         i_exp = np.exp(inputs)
         s = np.sum(i_exp, axis=1)
@@ -30,9 +36,9 @@ class Layer:
 
     @staticmethod
     def activation_tanh(inputs):
-        numer = np.exp(inputs) - np.exp(-inputs)
-        denom = np.exp(inputs) + np.exp(-inputs)
-        return numer / denom
+        p = np.exp(inputs)
+        n = np.exp(-inputs)
+        return (p - n) / (p + n)
 
     @staticmethod
     def loss_mse(output, expected):
