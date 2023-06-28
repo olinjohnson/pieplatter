@@ -12,6 +12,10 @@ class Layer:
         self.biases = np.random.randn(num_outputs)
         self.activation = activation
 
+    def reset(self):
+        self.weights = np.random.randn(self.weights.shape[0], self.weights.shape[1])
+        self.biases = np.random.randn(self.biases.shape[0])
+
     def calc(self, inputs):
         return np.dot(inputs, self.weights.T) + self.biases
 

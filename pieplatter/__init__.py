@@ -11,6 +11,7 @@ from pieplatter.src.loss import LossMSE
 from pieplatter.src.loss import LossCCE
 from pieplatter.src.loss import LossBCE
 from pieplatter.src.network import Network
+from pieplatter.src.metrics.plotting import TrainingComparePlotter
 
 __all__ = (
     "ActivationReLU",
@@ -25,7 +26,8 @@ __all__ = (
     "LossMSE",
     "LossCCE",
     "LossBCE",
-    "Network"
+    "Network",
+    "TrainingComparePlotter"
 )
 
 __version__ = "1.0.0.dev"
