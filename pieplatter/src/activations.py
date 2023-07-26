@@ -1,5 +1,9 @@
 from abc import ABC
 import numpy as np
+
+from pieplatter.src.utils import not_implemented, not_reviewed
+
+
 # TODO: add docstrings
 
 class Activation(ABC):
@@ -11,6 +15,17 @@ class Activation(ABC):
     @staticmethod
     def backward(inputs):
         pass
+
+
+class ActivationNone(Activation):
+
+    @staticmethod
+    def forward(inputs):
+        return inputs
+
+    @staticmethod
+    def backward(inputs):
+        return 1
 
 
 class ActivationReLU(Activation):
@@ -42,6 +57,7 @@ class ActivationELU(Activation):
         return np.maximum(inputs, np.exp(inputs) - 1)
 
     @staticmethod
+    @not_implemented
     def backward(inputs):
         # TODO: implement derivative function
         pass
@@ -74,6 +90,7 @@ class ActivationTanh(Activation):
 class ActivationSoftmax(Activation):
 
     @staticmethod
+    @not_reviewed
     def forward(inputs):
         # TODO: verify functionality
         i_exp = np.exp(inputs)
@@ -81,6 +98,7 @@ class ActivationSoftmax(Activation):
         return np.divide(i_exp.T, s).T
 
     @staticmethod
+    @not_implemented
     def backward(inputs):
         # TODO: implement derivative function
         pass

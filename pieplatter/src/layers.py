@@ -42,8 +42,6 @@ class Layer:
         return [cont_chain, weight_update, np.mean(a, axis=0)]
 
 
-
-
 # class OutputLayer(Layer):
 #     def __init__(self, num_inputs: int, num_outputs: int, activation: Type[Activation], loss: Type[Loss]):
 #         super().__init__(num_inputs, num_outputs, activation)
