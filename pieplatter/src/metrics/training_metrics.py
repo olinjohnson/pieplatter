@@ -4,13 +4,14 @@ import time
 from pieplatter.src.network import Network
 from pieplatter.src.metrics.plotting import Plotter
 
+
 class TrainingMetrics:
     def __init__(self, net: Network):
         self.net = net
 
-    def measure_iterations(self, training_iters, input_data, expected, plotter: Plotter = None, logging=True):
+    def measure_iterations_loss(self, training_iters, input_data, expected, plotter: Plotter = None, logging=True):
         """
-        Measures the performance of the network over multiple training iterations
+        Measures the average error of the network over multiple training iterations
         :param training_iters: the number of training iterations
         :param input_data: the training data
         :param expected: the training data labels
@@ -25,12 +26,12 @@ class TrainingMetrics:
             if logging:
                 print("Finished training iteration ", i)
         if plotter:
-            plotter.plot(losses)
+            plotter.plot_losses(np.array(losses))
         return np.mean([x[-1] for x in losses])
 
     @staticmethod
-    def time(callback):
+    def time(callback, *args, **kwargs):
         start = time.time()
-        callback()
+        callback(*args, **kwargs)
         end = time.time()
         return end - start

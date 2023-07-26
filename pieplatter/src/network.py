@@ -39,9 +39,8 @@ class Network:
         prop_loss = self.loss.forward(cache[-1][-1], expected)
         return np.mean(prop_loss), cache
 
-    def train(self, training_data, training_labels) -> List[Any]:
+    def train(self, training_data, training_labels) -> np.ndarray:
         """
-        # TODO: fix function return type
         :param training_data: the training data
         :param training_labels: the labels for the training data
         :return: a list of loss values - one for each training epoch
@@ -63,5 +62,4 @@ class Network:
             chain, weight_up, bias_up = curr_layer.backward(chain, training_data, cache[0][-1])
             curr_layer.weights -= (weight_up * self.learning_rate)
             curr_layer.biases -= (bias_up * self.learning_rate)
-        return losses
-
+        return np.array(losses)

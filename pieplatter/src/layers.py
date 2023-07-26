@@ -40,14 +40,3 @@ class Layer:
         weight_update = np.dot(a.T, prev_act) / len(a)
         cont_chain = np.dot(a, self.weights)
         return [cont_chain, weight_update, np.mean(a, axis=0)]
-
-
-# class OutputLayer(Layer):
-#     def __init__(self, num_inputs: int, num_outputs: int, activation: Type[Activation], loss: Type[Loss]):
-#         super().__init__(num_inputs, num_outputs, activation)
-#         self.loss = loss
-#
-#     def forward_loss(self, inputs, expected):
-#         a, cache = super().forward(inputs)
-#         return self.loss.forward(inputs, expected), cache
-

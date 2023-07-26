@@ -1,17 +1,20 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from pieplatter.src.utils import not_reviewed
+from pieplatter.src.utils import InvalidShapesError
+
 
 class Plotter:
-    def plot(self, data):
+    def plot_losses(self, data: np.ndarray):
         pass
 
 class MultiLinePlotter(Plotter):
-    def plot(self, data):
+    def plot_losses(self, data):
+        if len(data.shape) != 2:
+            raise InvalidShapesError("Invalid data shape for 2-dimensional plot")
+
         training_iters = len(data)
         num_epochs = len(data[0])
 
-        # figsize?
         fig = plt.figure(figsize=(10, 10))
         grid = plt.GridSpec(4, 1, hspace=1)
         sp_graph = plt.subplot(grid[:-1, 0])
@@ -23,6 +26,7 @@ class MultiLinePlotter(Plotter):
 
         sp_bar = plt.subplot(grid[-1, 0])
         sp_bar.bar([x for x in range(0, training_iters)], [x[-1] for x in data])
+        # TODO: xticks
         sp_bar.set_title("Final network losses by training iteration")
         sp_bar.set_xlabel("Training iteration number")
         sp_bar.set_ylabel("Network loss")
@@ -31,7 +35,10 @@ class MultiLinePlotter(Plotter):
         plt.show()
 
 class MultiGraphPlotter(Plotter):
-    def plot(self, data):
+    def plot_losses(self, data):
+        if len(data.shape) != 2:
+            raise InvalidShapesError("Invalid data shape for 2-dimensional plot")
+
         training_iters = len(data)
         num_epochs = len(data[0])
 
@@ -46,17 +53,9 @@ class MultiGraphPlotter(Plotter):
 
         sp_bar = plt.subplot(grid[-1, :3])
         sp_bar.bar([x for x in range(0, training_iters)], [x[-1] for x in data])
+        # TODO: xticks
         sp_bar.set_title("Final network losses by training iteration")
         sp_bar.set_xlabel("Training iteration number")
         sp_bar.set_ylabel("Network loss")
         sp_bar.set_ylim(0.0, 0.5)
         plt.show()
-
-
-@not_reviewed
-def _plot_single_iteration_data(losses):
-    # TODO: add more high-res plotting
-    fig, ax = plt.plot([x for x in range(0, len[losses])], losses)
-    plt.show()
-
-

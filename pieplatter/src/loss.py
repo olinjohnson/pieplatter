@@ -20,7 +20,7 @@ class LossMSE(Loss):
     """
 
     @staticmethod
-    # @not_reviewed
+    @not_reviewed
     def forward(inputs, expected) -> np.ndarray:
         # TODO: make sure inputs and expected
         #  satisfy the precondition

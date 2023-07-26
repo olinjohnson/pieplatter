@@ -33,7 +33,6 @@ __all__ = (
     "LossBCE",
     "Network",
     "TrainingMetrics",
-    "Plotter",
     "MultiGraphPlotter",
     "MultiLinePlotter",
 )
