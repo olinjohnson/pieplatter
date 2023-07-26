@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 import pieplatter as pie
 import matplotlib.pyplot as plt
@@ -12,8 +14,11 @@ def test_xor():
     inputs = np.array([[1, 1], [0, 0], [1, 0], [0, 1]])
     expected = np.array([[0], [0], [1], [1]])
 
-    net.set_params(1000, 0.1)
-    t = pie.TrainingMetrics.time(net.train, inputs, expected)
-    print("TIME: ", t)
+    net.set_params(500, 0.1)
+
+    metrics = pie.TrainingMetrics(net)
+    plotter = pie.MultiGraphPlotter()
+    mean_l = metrics.measure_iterations_loss(10, inputs, expected, plotter=plotter)
+    print("MEAN LOSS: ", mean_l)
 
 test_xor()
